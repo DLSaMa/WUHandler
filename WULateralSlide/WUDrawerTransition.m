@@ -1,39 +1,39 @@
 //
-//  CWDrawerTransition.m
+//  WUDrawerTransition.m
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/27.
 //  Copyright © 2017年 chavez. All rights reserved.
 //
 
-#import "CWDrawerTransition.h"
+#import "WUDrawerTransition.h"
 #import <objc/runtime.h>
-@interface CWDrawerTransition ()
+@interface WUDrawerTransition ()
 
-@property (nonatomic,weak) CWLateralSlideConfiguration *configuration;
+@property (nonatomic,weak) WULateralSlideConfiguration *configuration;
 
 @end
 
-@implementation CWDrawerTransition
+@implementation WUDrawerTransition
 {
-    CWDrawerTransitiontype _TransitionType;
+    WUDrawerTransitiontype _TransitionType;
     CWDrawerAnimationType _animationType;
     CGFloat _hiddenDelayTime;
 }
 
 
-- (instancetype)initWithTransitionType:(CWDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(CWLateralSlideConfiguration *)configuration {
+- (instancetype)initWithTransitionType:(WUDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(WULateralSlideConfiguration *)configuration {
     if (self = [super init]) {
         _TransitionType = transitionType;
         _animationType = animationType;
         _configuration = configuration;
-        if (_TransitionType == CWDrawerTransitiontypeHidden)
+        if (_TransitionType == WUDrawerTransitiontypeHidden)
         [self setupHiddenAnimationDelayTime];
     }
     return self;
 }
 
-+ (instancetype)transitionWithType:(CWDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(CWLateralSlideConfiguration *)configuration {
++ (instancetype)transitionWithType:(WUDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(WULateralSlideConfiguration *)configuration {
     return [[self alloc] initWithTransitionType:transitionType animationType:animationType configuration:configuration];
 }
 
@@ -46,15 +46,15 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (NSTimeInterval)transitionDuration:(nullable id <UIViewControllerContextTransitioning>)transitionContext {
-    return _TransitionType == CWDrawerTransitiontypeShow ? self.configuration.showAnimDuration : self.configuration.HiddenAnimDuration;
+    return _TransitionType == WUDrawerTransitiontypeShow ? self.configuration.showAnimDuration : self.configuration.HiddenAnimDuration;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
     switch (_TransitionType) {
-        case CWDrawerTransitiontypeShow:
+        case WUDrawerTransitiontypeShow:
             [self animationViewShow:transitionContext];
             break;
-        case CWDrawerTransitiontypeHidden:
+        case WUDrawerTransitiontypeHidden:
             [self animationViewHidden:transitionContext];
             break;
         default:
@@ -132,7 +132,7 @@
     CGFloat width = self.configuration.distance;
     CGFloat x = - width / 2;
     CGFloat ret = 1;
-    if (self.configuration.direction == CWDrawerTransitionFromRight) {
+    if (self.configuration.direction == WUDrawerTransitionFromRight) {
         x = kCWSCREENWIDTH - width / 2;
         ret = -1;
     }
@@ -145,7 +145,7 @@
     CGAffineTransform t2 = CGAffineTransformMakeTranslation(ret * translationX, 0);
     CGAffineTransform fromVCTransform = CGAffineTransformConcat(t1, t2);
     CGAffineTransform toVCTransform;
-    if (self.configuration.direction == CWDrawerTransitionFromRight) {
+    if (self.configuration.direction == WUDrawerTransitionFromRight) {
         toVCTransform = CGAffineTransformMakeTranslation(ret * (x - CGRectGetWidth(containerView.frame) + width), 0);
     }else {
         toVCTransform = CGAffineTransformMakeTranslation(ret * width / 2, 0);
@@ -192,7 +192,7 @@
     CGFloat width = self.configuration.distance;
     CGFloat x = - width;
     CGFloat ret = 1;
-    if (self.configuration.direction == CWDrawerTransitionFromRight) {
+    if (self.configuration.direction == WUDrawerTransitionFromRight) {
         x = kCWSCREENWIDTH;
         ret = -1;
     }
@@ -287,7 +287,7 @@ static dispatch_once_t cw_onceToken;
 @end
 
 NSString *const CWLateralSlideMaskViewKey = @"CWLateralSlideMaskViewKey";
-NSString *const CWLateralSlideAnimatorKey = @"CWLateralSlideAnimatorKey";
+NSString *const WULateralSlideAnimatorKey = @"WULateralSlideAnimatorKey";
 NSString *const CWLateralSlideInterativeKey = @"CWLateralSlideInterativeKey";
 
 NSString *const CWLateralSlidePanNoticationKey = @"CWLateralSlidePanNoticationKey";

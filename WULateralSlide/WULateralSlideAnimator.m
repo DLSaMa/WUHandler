@@ -1,32 +1,32 @@
 //
-//  CWLateralSlideAnimator.m
+//  WULateralSlideAnimator.m
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/29.
 //  Copyright © 2017年 chavez. All rights reserved.
 //
 
-#import "CWLateralSlideAnimator.h"
-#import "CWDrawerTransition.h"
+#import "WULateralSlideAnimator.h"
+#import "WUDrawerTransition.h"
 
-@interface CWLateralSlideAnimator ()
+@interface WULateralSlideAnimator ()
 
-@property (nonatomic,strong) CWInteractiveTransition *interactiveHidden;
-@property (nonatomic,strong) CWInteractiveTransition *interactiveShow;
+@property (nonatomic,strong) WUInteractiveTransition *interactiveHidden;
+@property (nonatomic,strong) WUInteractiveTransition *interactiveShow;
 
 @end
 
-@implementation CWLateralSlideAnimator
+@implementation WULateralSlideAnimator
 
 
-- (instancetype)initWithConfiguration:(CWLateralSlideConfiguration *)configuration {
+- (instancetype)initWithConfiguration:(WULateralSlideConfiguration *)configuration {
     if (self = [super init]) {
         _configuration = configuration;
     }
     return self;
 }
 
-+ (instancetype)lateralSlideAnimatorWithConfiguration:(CWLateralSlideConfiguration *)configuration {
++ (instancetype)lateralSlideAnimatorWithConfiguration:(WULateralSlideConfiguration *)configuration {
     return [[self alloc] initWithConfiguration:configuration];
 }
 
@@ -34,7 +34,7 @@
 //    NSLog(@"%s",__func__);
 }
 
-- (void)setConfiguration:(CWLateralSlideConfiguration *)configuration {
+- (void)setConfiguration:(WULateralSlideConfiguration *)configuration {
     _configuration = configuration;
     [self.interactiveShow setValue:configuration forKey:@"configuration"];
     [self.interactiveHidden setValue:configuration forKey:@"configuration"];
@@ -43,11 +43,11 @@
 
 #pragma mark -UIViewControllerTransitioningDelegate
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    return [CWDrawerTransition transitionWithType:CWDrawerTransitiontypeShow animationType:_animationType configuration:_configuration];
+    return [WUDrawerTransition transitionWithType:WUDrawerTransitiontypeShow animationType:_animationType configuration:_configuration];
 }
 
 - (nullable id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    return [CWDrawerTransition transitionWithType:CWDrawerTransitiontypeHidden animationType:_animationType configuration:_configuration];
+    return [WUDrawerTransition transitionWithType:WUDrawerTransitiontypeHidden animationType:_animationType configuration:_configuration];
 }
 
 - (nullable id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator {

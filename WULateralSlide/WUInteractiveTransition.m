@@ -1,25 +1,25 @@
 //
-//  CWInteractiveTransition.m
+//  WUInteractiveTransition.m
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/28.
 //  Copyright © 2017年 chavez. All rights reserved.
 //
 
-#import "CWInteractiveTransition.h"
+#import "WUInteractiveTransition.h"
 
-@interface CWInteractiveTransition ()<UIGestureRecognizerDelegate>
+@interface WUInteractiveTransition ()<UIGestureRecognizerDelegate>
 
 @property (nonatomic,weak) UIViewController *weakVC;
-@property (nonatomic,assign) CWDrawerTransitiontype type;
+@property (nonatomic,assign) WUDrawerTransitiontype type;
 @property (nonatomic,assign) BOOL openEdgeGesture;
-@property (nonatomic,assign) CWDrawerTransitionDirection direction;
+@property (nonatomic,assign) WUDrawerTransitionDirection direction;
 @property (nonatomic,strong) CADisplayLink *link;
-@property (nonatomic,copy) void(^transitionDirectionAutoBlock)(CWDrawerTransitionDirection direction);
+@property (nonatomic,copy) void(^transitionDirectionAutoBlock)(WUDrawerTransitionDirection direction);
 
 @end
 
-@implementation CWInteractiveTransition
+@implementation WUInteractiveTransition
 {
     CGFloat _percent;
     CGFloat _remaincount;
@@ -35,7 +35,7 @@
     return _link;
 }
 
-- (instancetype)initWithTransitiontype:(CWDrawerTransitiontype)type {
+- (instancetype)initWithTransitiontype:(WUDrawerTransitiontype)type {
     if (self = [super init]) {
         _type = type;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cw_singleTap) name:CWLateralSlideTapNoticationKey object:nil];
@@ -44,7 +44,7 @@
     return self;
 }
 
-+ (instancetype)interactiveWithTransitiontype:(CWDrawerTransitiontype)type {
++ (instancetype)interactiveWithTransitiontype:(WUDrawerTransitiontype)type {
     return [[self alloc] initWithTransitiontype:type];
 }
 
@@ -82,37 +82,37 @@
 
 #pragma mark -GestureRecognizer
 - (void)cw_singleTap {
-    if (_type == CWDrawerTransitiontypeShow) return;
+    if (_type == WUDrawerTransitiontypeShow) return;
     [self.weakVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)cw_handleHiddenPan:(NSNotification *)note {
     
-    if (_type == CWDrawerTransitiontypeShow) return;
+    if (_type == WUDrawerTransitiontypeShow) return;
     UIPanGestureRecognizer *pan = note.object;
     [self handleGesture:pan];
 }
 
 - (void)cw_handleShowPan:(UIPanGestureRecognizer *)pan {
     
-    if (_type == CWDrawerTransitiontypeHidden) return;
+    if (_type == WUDrawerTransitiontypeHidden) return;
     [self handleGesture:pan];
 }
 
 - (void)hiddenBeganTranslationX:(CGFloat)x {
-    if ((x > 0 && _direction == CWDrawerTransitionFromLeft ) ||
-        (x < 0 && _direction == CWDrawerTransitionFromRight )) return;
+    if ((x > 0 && _direction == WUDrawerTransitionFromLeft ) ||
+        (x < 0 && _direction == WUDrawerTransitionFromRight )) return;
     self.interacting = YES;
     [self.weakVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showBeganTranslationX:(CGFloat)x gesture:(UIPanGestureRecognizer *)pan {
 //    NSLog(@"---->%f", x);
-    if (x >= 0) _direction = CWDrawerTransitionFromLeft;
-    else        _direction = CWDrawerTransitionFromRight;
+    if (x >= 0) _direction = WUDrawerTransitionFromLeft;
+    else        _direction = WUDrawerTransitionFromRight;
     
-    if ((x < 0 && _direction == CWDrawerTransitionFromLeft) ||
-        (x > 0 && _direction == CWDrawerTransitionFromRight)) return;
+    if ((x < 0 && _direction == WUDrawerTransitionFromLeft) ||
+        (x > 0 && _direction == WUDrawerTransitionFromRight)) return;
     
     self.interacting = YES;
     if (_transitionDirectionAutoBlock) {
@@ -136,7 +136,7 @@
     _percent = 0;
     _percent = x / pan.view.frame.size.width;
     
-    if ((_direction == CWDrawerTransitionFromRight && _type == CWDrawerTransitiontypeShow) || (_direction == CWDrawerTransitionFromLeft && _type == CWDrawerTransitiontypeHidden)) {
+    if ((_direction == WUDrawerTransitionFromRight && _type == WUDrawerTransitiontypeShow) || (_direction == WUDrawerTransitionFromLeft && _type == WUDrawerTransitiontypeHidden)) {
         _percent = -_percent;
     }
 
@@ -145,7 +145,7 @@
             break;
         case UIGestureRecognizerStateChanged: {
             if (!self.interacting) { // 保证present只调用一次
-                if (_type == CWDrawerTransitiontypeShow) {
+                if (_type == WUDrawerTransitiontypeShow) {
                     // 必须最少有20个位移才进行抽屉显示
                     if (fabs(x) > 20) [self showBeganTranslationX:x gesture:pan];
                 }else {
@@ -168,13 +168,13 @@
 
 #pragma mark edge gesture
 - (void)cw_handleEdgePan:(UIScreenEdgePanGestureRecognizer *)edgePan {
-    if (_type == CWDrawerTransitiontypeHidden) return;
+    if (_type == WUDrawerTransitiontypeHidden) return;
     
     CGFloat x = [edgePan translationInView:edgePan.view].x;
     _percent = 0;
     _percent = x / edgePan.view.frame.size.width;
     _direction = edgePan.edges == UIRectEdgeRight;
-    if (_direction == CWDrawerTransitionFromRight) {
+    if (_direction == WUDrawerTransitionFromRight) {
         _percent = -_percent;
     }
     switch (edgePan.state) {

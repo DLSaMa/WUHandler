@@ -1,5 +1,5 @@
 //
-//  UIViewController+CWLateralSlide.h
+//  UIViewController+WULateralSlide.h
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/29.
@@ -7,8 +7,8 @@
 //  v1.6.4
 
 #import <UIKit/UIKit.h>
-#import "CWLateralSlideAnimator.h"
-#import "CWLateralSlideConfiguration.h"
+#import "WULateralSlideAnimator.h"
+#import "WULateralSlideConfiguration.h"
 
 @interface UIViewController (CWLateralSlide)
 
@@ -32,7 +32,7 @@
  */
 - (void)cw_showDrawerViewController:(UIViewController *)viewController
                       animationType:(CWDrawerAnimationType)animationType
-                      configuration:(CWLateralSlideConfiguration *)configuration;
+                      configuration:(WULateralSlideConfiguration *)configuration;
 
 /**
  注册手势驱动方法，侧滑呼出的方向自动确定，一般在viewDidLoad调用，调用之后会添加一个支持侧滑的手势到本控制器
@@ -41,7 +41,7 @@
  @param transitionDirectionAutoBlock 手势过程中执行的操作。根据参数direction传整个点击present的事件即可（看demo的使用）
  */
 - (void)cw_registerShowIntractiveWithEdgeGesture:(BOOL)openEdgeGesture
-                    transitionDirectionAutoBlock:(void(^)(CWDrawerTransitionDirection direction))transitionDirectionAutoBlock;
+                    transitionDirectionAutoBlock:(void(^)(WUDrawerTransitionDirection direction))transitionDirectionAutoBlock;
 
 /**
  Custom push method 自定义的push动画

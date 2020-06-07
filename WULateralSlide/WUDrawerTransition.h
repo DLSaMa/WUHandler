@@ -1,5 +1,5 @@
 //
-//  CWDrawerTransition.h
+//  WUDrawerTransition.h
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/27.
@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "CWLateralSlideConfiguration.h"
+#import "WULateralSlideConfiguration.h"
 
-typedef NS_ENUM(NSUInteger,CWDrawerTransitiontype) {
-    CWDrawerTransitiontypeShow = 0,      // 显示抽屉
-    CWDrawerTransitiontypeHidden,        // 隐藏抽屉
+typedef NS_ENUM(NSUInteger,WUDrawerTransitiontype) {
+    WUDrawerTransitiontypeShow = 0,      // 显示抽屉
+    WUDrawerTransitiontypeHidden,        // 隐藏抽屉
 };
 
 
@@ -21,11 +21,11 @@ typedef NS_ENUM(NSUInteger,CWDrawerAnimationType) {
     CWDrawerAnimationTypeMask
 };
 
-@interface CWDrawerTransition : NSObject<UIViewControllerAnimatedTransitioning>
+@interface WUDrawerTransition : NSObject<UIViewControllerAnimatedTransitioning>
 
-- (instancetype)initWithTransitionType:(CWDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(CWLateralSlideConfiguration *)configuration;
+- (instancetype)initWithTransitionType:(WUDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(WULateralSlideConfiguration *)configuration;
 
-+ (instancetype)transitionWithType:(CWDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(CWLateralSlideConfiguration *)configuration;
++ (instancetype)transitionWithType:(WUDrawerTransitiontype)transitionType animationType:(CWDrawerAnimationType)animationType configuration:(WULateralSlideConfiguration *)configuration;
 
 @end
 
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger,CWDrawerAnimationType) {
 @end
 
 
-UIKIT_EXTERN NSString *const CWLateralSlideAnimatorKey;
+UIKIT_EXTERN NSString *const WULateralSlideAnimatorKey;
 UIKIT_EXTERN NSString *const CWLateralSlideMaskViewKey;
 UIKIT_EXTERN NSString *const CWLateralSlideInterativeKey;
 

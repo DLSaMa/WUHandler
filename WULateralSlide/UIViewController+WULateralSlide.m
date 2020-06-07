@@ -1,14 +1,14 @@
 //
-//  UIViewController+CWLateralSlide.m
+//  UIViewController+WULateralSlide.m
 //  ViewControllerTransition
 //
 //  Created by chavez on 2017/6/29.
 //  Copyright © 2017年 chavez. All rights reserved.
 //
 
-#import "UIViewController+CWLateralSlide.h"
-#import "CWInteractiveTransition.h"
-#import "CWDrawerTransition.h"
+#import "UIViewController+WULateralSlide.h"
+#import "WUInteractiveTransition.h"
+#import "WUDrawerTransition.h"
 #import <objc/runtime.h>
 
 @implementation UIViewController (CWLateralSlide)
@@ -19,22 +19,22 @@
 }
 
 // 显示抽屉
-- (void)cw_showDrawerViewController:(UIViewController *)viewController animationType:(CWDrawerAnimationType)animationType configuration:(CWLateralSlideConfiguration *)configuration {
+- (void)cw_showDrawerViewController:(UIViewController *)viewController animationType:(CWDrawerAnimationType)animationType configuration:(WULateralSlideConfiguration *)configuration {
     
     if (viewController == nil) return;
     if (configuration == nil)
-        configuration = [CWLateralSlideConfiguration defaultConfiguration];
+        configuration = [WULateralSlideConfiguration defaultConfiguration];
     
-    CWLateralSlideAnimator *animator = objc_getAssociatedObject(self, &CWLateralSlideAnimatorKey);
+    WULateralSlideAnimator *animator = objc_getAssociatedObject(self, &WULateralSlideAnimatorKey);
     
     if (animator == nil) {
-        animator = [CWLateralSlideAnimator lateralSlideAnimatorWithConfiguration:configuration];
-        objc_setAssociatedObject(viewController, &CWLateralSlideAnimatorKey, animator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        animator = [WULateralSlideAnimator lateralSlideAnimatorWithConfiguration:configuration];
+        objc_setAssociatedObject(viewController, &WULateralSlideAnimatorKey, animator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     viewController.transitioningDelegate = animator;
     objc_setAssociatedObject(viewController, &CWLateralSlideDirectionKey, @(configuration.direction), OBJC_ASSOCIATION_ASSIGN);
 
-    CWInteractiveTransition *interactiveHidden = [CWInteractiveTransition interactiveWithTransitiontype:CWDrawerTransitiontypeHidden];
+    WUInteractiveTransition *interactiveHidden = [WUInteractiveTransition interactiveWithTransitiontype:WUDrawerTransitiontypeHidden];
     [interactiveHidden setValue:viewController forKey:@"weakVC"];
     [interactiveHidden setValue:@(configuration.direction) forKey:@"direction"];
     
@@ -49,14 +49,14 @@
 }
 
 // 注册抽屉手势
-- (void)cw_registerShowIntractiveWithEdgeGesture:(BOOL)openEdgeGesture transitionDirectionAutoBlock:(void(^)(CWDrawerTransitionDirection direction))transitionDirectionAutoBlock {
+- (void)cw_registerShowIntractiveWithEdgeGesture:(BOOL)openEdgeGesture transitionDirectionAutoBlock:(void(^)(WUDrawerTransitionDirection direction))transitionDirectionAutoBlock {
     
-    CWLateralSlideAnimator *animator = [CWLateralSlideAnimator lateralSlideAnimatorWithConfiguration:nil];
+    WULateralSlideAnimator *animator = [WULateralSlideAnimator lateralSlideAnimatorWithConfiguration:nil];
     self.transitioningDelegate = animator;
     
-    objc_setAssociatedObject(self, &CWLateralSlideAnimatorKey, animator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &WULateralSlideAnimatorKey, animator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    CWInteractiveTransition *interactiveShow = [CWInteractiveTransition interactiveWithTransitiontype:CWDrawerTransitiontypeShow];
+    WUInteractiveTransition *interactiveShow = [WUInteractiveTransition interactiveWithTransitiontype:WUDrawerTransitiontypeShow];
     [interactiveShow setValue:@(openEdgeGesture) forKey:@"openEdgeGesture"];
     [interactiveShow setValue:transitionDirectionAutoBlock forKey:@"transitionDirectionAutoBlock"];
     [interactiveShow addPanGestureForViewController:self];
@@ -71,7 +71,7 @@
 
 - (void)cw_pushViewController:(UIViewController *)vc drewerHiddenDuration:(NSTimeInterval)duration {
     
-    CWLateralSlideAnimator *animator = (CWLateralSlideAnimator *)self.transitioningDelegate;
+    WULateralSlideAnimator *animator = (WULateralSlideAnimator *)self.transitioningDelegate;
     animator.configuration.HiddenAnimDuration = duration > 0 ? duration : animator.configuration.HiddenAnimDuration;
     UIViewController *rootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
     UINavigationController *nav;
